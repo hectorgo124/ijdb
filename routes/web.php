@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthorController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JokeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +20,4 @@ Route::get('/', function () {
 });
 
 Route::resource('authors', AuthorController::class);
+Route::resource('jokes', JokeController::class);
