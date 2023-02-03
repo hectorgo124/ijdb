@@ -27,17 +27,15 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>S.No</th>
-                    <th>Joke Name</th>
-                    <th>Joke Email</th>
-                    <th>Joke Address</th>
+                    <th>Joke Text</th>
+                    <th>Joke Date</th>
+                    <th>Author Id</th>
                     <th width="280px">Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($jokes as $joke)
                 <tr>
-                    <td>{{ $joke->id }}</td>
                     <td>{{ $joke->joketext }}</td>
                     <td>{{ $joke->jokedate }}</td>
                     <td>{{ $joke->authorid}}</td>
