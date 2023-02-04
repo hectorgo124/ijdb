@@ -37,7 +37,7 @@ class AuthorController extends Controller
         return redirect()->route('authors.index')->with('success', 'Author has been added!');
     }
 
-    /* mostrar el author concret */
+    /* mostrar form editar author */
 
     public function edit(Author $author)
     {

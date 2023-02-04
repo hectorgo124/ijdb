@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JokeController;
 
@@ -21,3 +22,4 @@ Route::get('/', function () {
 
 Route::resource('authors', AuthorController::class);
 Route::resource('jokes', JokeController::class);
+Route::resource('categories', CategoryController::class);

@@ -32,6 +32,7 @@
                     <th>Joke Text</th>
                     <th>Joke Date</th>
                     <th>Author</th>
+                    <th>Category</th>
                     <th width="280px">Action</th>
                 </tr>
             </thead>
@@ -43,6 +44,16 @@
                     <td> @foreach ($authors as $author)
                         @if($author->id == $joke->authorid)
                         {{$author->name}}
+                        @endif
+                        @endforeach
+                    </td>
+                    <td> @foreach ($jokeCategories as $jokeCat)
+                        @if($jokeCat->jokeid == $joke->id)
+                        @foreach ($categories as $category)
+                        @if($category->id == $jokeCat->categoryid)
+                        {{$category->name}}
+                        @endif
+                        @endforeach
                         @endif
                         @endforeach
                     </td>

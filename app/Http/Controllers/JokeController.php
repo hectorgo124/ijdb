@@ -16,9 +16,10 @@ class JokeController extends Controller
     public function index()
     {
         $authors =  DB::table('authors')->get();
-
+        $jokeCategories = DB::table('joke_categories')->get();
+        $categories = DB::table('categories')->get();
         $jokes = Joke::orderBy('id', 'desc')->paginate(100);
-        return view('jokes.index', compact('jokes', 'authors'));
+        return view('jokes.index', compact('jokes', 'authors', 'jokeCategories', 'categories'));
     }
 
     /**
