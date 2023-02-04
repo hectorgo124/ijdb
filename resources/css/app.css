@@ -1,0 +1,7 @@
+.ijdb{
+    text-decoration: none;
+}
+
+.ijdb :hover{
+    color: red;
+}
