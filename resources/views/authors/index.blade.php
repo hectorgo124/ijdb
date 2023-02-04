@@ -6,13 +6,14 @@
     <title>AUTHORS</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
+@include('navbar')
 
-<body>
+<body class="bg-secondary text-light">
     <div class="container mt-2">
         <div class="row">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left">
-                    <h2>IJDB</h2>
+                    <h2>Authors List</h2>
                 </div>
                 <div class="pull-right mb-2">
                     <a class="btn btn-success" href="{{ route('authors.create') }}"> Add author </a>
@@ -24,7 +25,7 @@
             <p>{{ $message }}</p>
         </div>
         @endif
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover table-dark text-center">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -41,6 +42,7 @@
                     <td>{{ $author->email }}</td>
                     <td>
                         <form action="{{ route('authors.destroy',$author->id) }}" method="Post">
+                            @method('EDIT')
                             <a class="btn btn-primary" href="{{ route('authors.edit',$author->id) }}">Edit</a>
                             @csrf
                             @method('DELETE')

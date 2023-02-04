@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
-<body>
+@include('navbar')
+
+<body class="bg-secondary text-light">
     <div class="container mt-2">
         <div class="row">
             <div class="col-lg-12 margin-tb">
@@ -24,12 +26,12 @@
             <p>{{ $message }}</p>
         </div>
         @endif
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover table-dark">
             <thead>
                 <tr>
                     <th>Joke Text</th>
                     <th>Joke Date</th>
-                    <th>Author Id</th>
+                    <th>Author</th>
                     <th width="280px">Action</th>
                 </tr>
             </thead>
@@ -38,9 +40,15 @@
                 <tr>
                     <td>{{ $joke->joketext }}</td>
                     <td>{{ $joke->jokedate }}</td>
-                    <td>{{ $joke->authorid}}</td>
+                    <td> @foreach ($authors as $author)
+                        @if($author->id == $joke->authorid)
+                        {{$author->name}}
+                        @endif
+                        @endforeach
+                    </td>
                     <td>
                         <form action="{{ route('jokes.destroy',$joke->id) }}" method="Post">
+                            @method('EDIT')
                             <a class="btn btn-primary" href="{{ route('jokes.edit',$joke->id) }}">Edit</a>
                             @csrf
                             @method('DELETE')

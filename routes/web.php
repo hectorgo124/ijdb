@@ -16,7 +16,7 @@ use App\Http\Controllers\JokeController;
 */
 
 Route::get('/', function () {
-    return "<h1>HOLA</h1>";
+    return view('home');
 });
 
 Route::resource('authors', AuthorController::class);

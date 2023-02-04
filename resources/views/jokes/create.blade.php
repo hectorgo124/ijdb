@@ -3,12 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Add Joke Form - Laravel 9 CRUD</title>
+    <title>Add Joke Form</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
+@include('navbar')
 
-<body>
-    <div class="container mt-2">
+<body class="bg-secondary text-light">
+    <div class="container mt-2 bg-dark p-3 border border-white rounded">
         <div class="row">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left mb-2">
@@ -45,7 +46,22 @@
                         @enderror
                     </div>
                 </div>
-                >
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <strong>Author:</strong>
+                        <select name="authorid">
+                            <option value="">Select one</option>
+                            @foreach ($authors as $author)
+                            <option value="{{$author->id}}">
+                                {{ $author->name }}
+                            </option>
+                            @endforeach
+                        </select>
+                        @error('authorid')
+                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
                 <button type="submit" class="btn btn-primary ml-3">Submit</button>
             </div>
         </form>

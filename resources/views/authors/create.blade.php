@@ -6,9 +6,10 @@
     <title>IJDB</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
+@include('navbar')
 
-<body>
-    <div class="container mt-2">
+<body class="bg-secondary text-light">
+    <div class="container mt-2 bg-dark p-3 border border-white rounded">
         <div class="row">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left mb-2">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\Joke;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,10 @@ class JokeController extends Controller
      */
     public function index()
     {
-        $jokes = Joke::orderBy('id', 'desc')->paginate(5);
-        return view('jokes.index', compact('jokes'));
+        $authors =  DB::table('authors')->get();
+
+        $jokes = Joke::orderBy('id', 'desc')->paginate(100);
+        return view('jokes.index', compact('jokes', 'authors'));
     }
 
     /**
@@ -25,7 +28,8 @@ class JokeController extends Controller
      */
     public function create()
     {
-        return view('jokes.create');
+        $authors =  DB::table('authors')->get();
+        return view('jokes.create', compact('authors'));
     }
 
     /**
@@ -37,9 +41,9 @@ class JokeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'address' => 'required',
+            'joketext' => 'required',
+            'jokedate' => 'required',
+            'authorid' => 'required',
         ]);
 
         Joke::create($request->post());
@@ -66,7 +70,8 @@ class JokeController extends Controller
      */
     public function edit(Joke $joke)
     {
-        return view('jokes.edit', compact('joke'));
+        $authors =  DB::table('authors')->get();
+        return view('jokes.edit', compact('joke', 'authors'));
     }
 
     /**

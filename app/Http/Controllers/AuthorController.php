@@ -12,7 +12,7 @@ class AuthorController extends Controller
     public function index()
     {
 
-        $authors = Author::orderBy('id', 'desc')->paginate(5);
+        $authors = Author::orderBy('id', 'desc')->paginate();
         return view('authors.index', compact('authors'));
     }
 
@@ -29,7 +29,7 @@ class AuthorController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required | email',
-            //'password' => ['required', 'string']
+            'password' => ['required', 'string']
         ]);
 
         Author::create($request->post());
@@ -39,7 +39,7 @@ class AuthorController extends Controller
 
     /* mostrar el author concret */
 
-    public function show(Author $author)
+    public function edit(Author $author)
     {
 
         return view('authors.edit', compact('author'));
@@ -47,7 +47,7 @@ class AuthorController extends Controller
 
     /* enviar el editat a la bbdd */
 
-    public function edit(Request $request, Author $author)
+    public function update(Request $request, Author $author)
     {
 
         $request->validate([
