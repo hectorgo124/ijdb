@@ -21,30 +21,32 @@
                 </div>
             </div>
         </div>
-        @if(session('status'))
-        <div class="alert alert-success mb-1 mt-1">
-            {{ session('status') }}
-        </div>
+        @if (session('status'))
+            <div class="alert alert-success mb-1 mt-1">
+                {{ session('status') }}
+            </div>
         @endif
-        <form action="{{ route('jokes.update',$joke->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('jokes.update', $joke->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong>Joke Name:</strong>
-                        <input type="text" name="joketext" value="{{ $joke->joketext }}" class="form-control" placeholder="Joke Text">
+                        <input type="text" name="joketext" value="{{ $joke->joketext }}" class="form-control"
+                            placeholder="Joke Text">
                         @error('joketext')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong>Joke Date:</strong>
-                        <input type="date" name="jokedate" class="form-control" placeholder="Joke Date" value="{{ $joke->jokedate }}">
+                        <input type="date" name="jokedate" class="form-control" placeholder="Joke Date"
+                            value="{{ $joke->jokedate }}">
                         @error('jokedate')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
@@ -52,21 +54,21 @@
                     <div class="form-group">
                         <strong>Author:</strong>
                         <select name="authorid">
-                            <option value="{{$joke->authorid}}">
+                            <option value="{{ $joke->authorid }}">
                                 @foreach ($authors as $author)
-                                @if($author->id == $joke->authorid)
-                                {{$author->name}}
-                                @endif
+                                    @if ($author->id == $joke->authorid)
+                                        {{ $author->name }}
+                                    @endif
                                 @endforeach
                             </option>
                             @foreach ($authors as $author)
-                            <option value="{{$author->id}}">
-                                {{ $author->name }}
-                            </option>
+                                <option value="{{ $author->id }}">
+                                    {{ $author->name }}
+                                </option>
                             @endforeach
                         </select>
                         @error('authorid')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
@@ -74,25 +76,34 @@
                     <div class="form-group">
                         <strong>Category:</strong>
                         @foreach ($categories as $category)
-                        <label for="category">{{$category->name}}
-                            @isset($jokeCategories)
-                            <input type="checkbox" name="categoryid[]" value="{{$category->id}}">
+                            <label for="category">{{ $category->name }}
+                                @isset($jokeCategories)
+                                    @php
+                                        $aux = true;
+                                    @endphp
+                                    @foreach ($jokeCategories as $jokeCategory)
+                                        @if ($category->id == $jokeCategory->categoryid)
+                                            <input type="checkbox" name="categoryid[]" value="{{ $category->id }}" checked>
+
+                                            @php
+                                                $aux = false;
+                                            @endphp
+                                        @break
+                                    @endif
+                                @endforeach
+
+                                @if ($aux)
+                                    <input type="checkbox" name="categoryid[]" value="{{ $category->id }}">
+                                @endif
                             @else
-                            @foreach ($jokeCategories as $jokeCategory)
-                            @if($category->id == $jokeCategory->categoryid)
-                            <input type="checkbox" name="categoryid[]" value="{{$category->id}}" checked>
-                            @break
-                            @else
-                            <input type="checkbox" name="categoryid[]" value="{{$category->id}}">
-                            @endif
-                            @endforeach
-                            @endif
+                                <input type="checkbox" name="categoryid[]" value="{{ $category->id }}">
+                        @endif
 
                         </label>
                         <br>
                         @endforeach
                         @error('categoryid')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
@@ -102,7 +113,7 @@
         </form>
     </div>
     @error('name')
-    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
     @enderror
 </body>
 
