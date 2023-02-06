@@ -70,6 +70,33 @@
                         @enderror
                     </div>
                 </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <strong>Category:</strong>
+                        @foreach ($categories as $category)
+                        <label for="category">{{$category->name}}
+                            @isset($jokeCategories)
+                            <input type="checkbox" name="categoryid[]" value="{{$category->id}}">
+                            @else
+                            @foreach ($jokeCategories as $jokeCategory)
+                            @if($category->id == $jokeCategory->categoryid)
+                            <input type="checkbox" name="categoryid[]" value="{{$category->id}}" checked>
+                            @break
+                            @else
+                            <input type="checkbox" name="categoryid[]" value="{{$category->id}}">
+                            @endif
+                            @endforeach
+                            @endif
+
+                        </label>
+                        <br>
+                        @endforeach
+                        @error('categoryid')
+                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-primary ml-3">Submit</button>
             </div>
         </form>
