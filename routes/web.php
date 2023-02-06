@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JokeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +17,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+
+Route::resource('authors', AuthorController::class);
+Route::resource('jokes', JokeController::class);
+Route::resource('categories', CategoryController::class);
