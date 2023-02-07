@@ -82,7 +82,11 @@ class JokeController extends Controller
      */
     public function show(Joke $joke)
     {
-        return view('jokes.show', compact('joke'));
+        $categories =  DB::table('categories')
+            ->join('joke_categories', 'joke_categories.categoryid', '=', 'categories.id')
+            ->where('joke_categories.jokeid', intval($joke->id))
+            ->get();
+        return view('categories.filter', compact('joke'))->with("categories", $categories);
     }
 
     /**

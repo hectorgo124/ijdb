@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\Joke;
+use Faker\Core\Number;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -20,6 +23,8 @@ class CategoryController extends Controller
     {
         return view('categories.create');
     }
+
+
 
     // afegir una nova categoria
     public function store(Request $request)
@@ -40,6 +45,15 @@ class CategoryController extends Controller
         return view('categories.edit', compact('category'));
     }
 
+    public function show(Category $category)
+    {
+        $authors =  DB::table('authors')->get();
+        $jokes =  DB::table('jokes')
+            ->join('joke_categories', 'joke_categories.jokeid', '=', 'jokes.id')
+            ->where('joke_categories.categoryid', intval($category->id))
+            ->get();
+        return view('jokes.filter', compact('category'))->with("jokes", $jokes)->with("authors", $authors);
+    }
     // enviar la categoria edita
 
     public function update(Request $request, Category $category)

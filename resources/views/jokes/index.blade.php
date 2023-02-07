@@ -66,6 +66,8 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Delete</button>
+                                @method('GET')
+                                <a class="btn btn-success" href="{{ route('jokes.show', $joke) }}">Show Categories</a>
                             </form>
                         </td>
                     </tr>
