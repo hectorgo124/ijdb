@@ -14,7 +14,14 @@
         <div class="row">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left">
-                    <h2>Jokes List of Category {{ $category->name }}</h2>
+                    @if ($isAuthor)
+                        <h2>Jokes List of Author {{ $author->name }}</h2>
+                    @else
+                        <h2>Jokes List of Category {{ $category->name }}</h2>
+                    @endif
+
+
+
                 </div>
             </div>
         </div>
@@ -52,6 +59,7 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Delete</button>
+
                             </form>
                         </td>
                     </tr>

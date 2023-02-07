@@ -47,12 +47,13 @@ class CategoryController extends Controller
 
     public function show(Category $category)
     {
+        $isAuthor = false;
         $authors =  DB::table('authors')->get();
         $jokes =  DB::table('jokes')
             ->join('joke_categories', 'joke_categories.jokeid', '=', 'jokes.id')
             ->where('joke_categories.categoryid', intval($category->id))
             ->get();
-        return view('jokes.filter', compact('category'))->with("jokes", $jokes)->with("authors", $authors);
+        return view('jokes.filter', compact('category'))->with("jokes", $jokes)->with("authors", $authors)->with("isAuthor", $isAuthor);
     }
     // enviar la categoria edita
 
