@@ -21,9 +21,9 @@
             </div>
         </div>
         @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
+            <div class="alert alert-success">
+                <p>{{ $message }}</p>
+            </div>
         @endif
         <table class="table table-bordered table-hover table-dark text-center">
             <thead>
@@ -31,25 +31,38 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Roles</th>
                     <th width="280px">Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($authors as $author)
-                <tr>
-                    <td>{{ $author->id }}</td>
-                    <td>{{ $author->name }}</td>
-                    <td>{{ $author->email }}</td>
-                    <td>
-                        <form action="{{ route('authors.destroy',$author->id) }}" method="Post">
-                            @method('EDIT')
-                            <a class="btn btn-primary" href="{{ route('authors.edit',$author->id) }}">Edit</a>
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>{{ $author->id }}</td>
+                        <td>{{ $author->name }}</td>
+                        <td>{{ $author->email }}</td>
+                        <td>
+                            @foreach ($authorroles as $auRol)
+                                @if ($auRol->authorid == $author->id)
+                                    @foreach ($roles as $role)
+                                        @if ($role->id == $auRol->roleid)
+                                            > {{ $role->description }} <br>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            @endforeach
+
+                        </td>
+                        <td>
+                            <form action="{{ route('authors.destroy', $author->id) }}" method="Post">
+                                @method('EDIT')
+                                <a class="btn btn-primary" href="{{ route('authors.edit', $author->id) }}">Edit</a>
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>

@@ -10,13 +10,68 @@
 
 </head>
 
+
 @include('navbar')
 
 <body class="bg-secondary">
     <div class="m-0 mt-5 row justify-content-center align-items-center">
-        <div class="col-auto bg-dark p-5 text-center text-light">
+        <div class="col-auto bg-dark p-5 text-center text-light border border-light rounded shadow-lg">
             <p> Welcome to IJDB Project, developed by Juan Cruz, Javier Galán and Hector Granell. </p>
             <p> 2 DAW </p>
+        </div>
+
+
+    </div>
+
+    <div class="m-0 mt-5 row justify-content-center align-items-center ">
+        <div class="col-auto bg-dark p-5 text-center text-light border border-light rounded shadow-lg">
+            <p>RANDOM JOKE: </p>
+            @php
+                use App\Http\Controllers\JokeController;
+                use App\Http\Controllers\AuthorController;
+                use Illuminate\Support\Facades\DB;
+                
+                $jokes = DB::table('jokes')->get();
+                
+                $joke = $jokes[rand(1, count($jokes) - 1)];
+                
+                echo $joke->joketext;
+                
+                $authors = DB::table('authors')->get();
+                
+                foreach ($authors as $author) {
+                    if ($author->id == $joke->authorid) {
+                        $au = '<br><br>AUTHOR: - ';
+                        $au = $au . $author->name;
+                        echo $au;
+                        break;
+                    }
+                }
+            @endphp
+        </div>
+    </div>
+
+    <div class="m-0 mt-5 row justify-content-center align-items-center">
+        <div class="col-auto bg-dark p-5 text-center text-light border border-light rounded shadow-lg">
+            <p>LAST JOKE: </p>
+            @php
+                
+                $joke = DB::table('jokes')
+                    ->latest('created_at')
+                    ->first();
+                echo $joke->joketext;
+                
+                $authors = DB::table('authors')->get();
+                
+                foreach ($authors as $author) {
+                    if ($author->id == $joke->authorid) {
+                        $au = '<br><br>AUTHOR: - ';
+                        $au = $au . $author->name;
+                        echo $au;
+                        break;
+                    }
+                }
+            @endphp
         </div>
     </div>
 </body>

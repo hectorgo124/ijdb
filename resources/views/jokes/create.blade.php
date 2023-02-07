@@ -20,10 +20,10 @@
                 </div>
             </div>
         </div>
-        @if(session('status'))
-        <div class="alert alert-success mb-1 mt-1">
-            {{ session('status') }}
-        </div>
+        @if (session('status'))
+            <div class="alert alert-success mb-1 mt-1">
+                {{ session('status') }}
+            </div>
         @endif
         <form action="{{ route('jokes.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -33,7 +33,7 @@
                         <strong>Joke Joketext:</strong>
                         <input type="text" name="joketext" class="form-control" placeholder="Joke Joketext">
                         @error('joketext')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                         <strong>Joke Jokedate:</strong>
                         <input type="date" name="jokedate" class="form-control" placeholder="Joke Jokedate">
                         @error('jokedate')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
@@ -52,29 +52,27 @@
                         <select name="authorid">
                             <option value="">Select one</option>
                             @foreach ($authors as $author)
-                            <option value="{{$author->id}}">
-                                {{ $author->name }}
-                            </option>
+                                <option value="{{ $author->id }}">
+                                    {{ $author->name }}
+                                </option>
                             @endforeach
                         </select>
                         @error('authorid')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Category:</strong>
-                        <select name="categoryid">
-                            <option value="">Select one</option>
-                            @foreach ($categories as $category)
-                            <option value="{{$category->id}}">
-                                {{ $category->name }}
-                            </option>
-                            @endforeach
-                        </select>
+                        <strong>Category:</strong><br>
+                        @foreach ($categories as $category)
+                            <label for="category">{{ $category->name }}
+                                <input type="checkbox" name="categoryid[]" value="{{ $category->id }}">
+                            </label>
+                            <br>
+                        @endforeach
                         @error('categoryid')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
