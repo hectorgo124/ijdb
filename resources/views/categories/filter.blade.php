@@ -13,10 +13,7 @@
         <div class="row">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left">
-                    <h2>Categories List</h2>
-                </div>
-                <div class="pull-right mb-2">
-                    <a class="btn btn-success" href="{{ route('categories.create') }}"> Add category </a>
+                    <h2>Categories List of joke {{ $joke->joketext }}</h2>
                 </div>
             </div>
         </div>
@@ -46,16 +43,12 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Delete</button>
-                                @method('GET')
-                                <a class="btn btn-success" href="{{ route('categories.show', $category->id) }}">Show
-                                    Jokes</a>
                             </form>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-        {!! $categories->links() !!}
     </div>
 
 

@@ -22,9 +22,9 @@
             </div>
         </div>
         @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
+            <div class="alert alert-success">
+                <p>{{ $message }}</p>
+            </div>
         @endif
         <table class="table table-bordered table-hover table-dark">
             <thead>
@@ -38,35 +38,39 @@
             </thead>
             <tbody>
                 @foreach ($jokes as $joke)
-                <tr>
-                    <td>{{ $joke->joketext }}</td>
-                    <td>{{ $joke->jokedate }}</td>
-                    <td> @foreach ($authors as $author)
-                        @if($author->id == $joke->authorid)
-                        {{$author->name}}
-                        @endif
-                        @endforeach
-                    </td>
-                    <td> @foreach ($jokeCategories as $jokeCat)
-                        @if($jokeCat->jokeid == $joke->id)
-                        @foreach ($categories as $category)
-                        @if($category->id == $jokeCat->categoryid)
-                        {{$category->name}}
-                        @endif
-                        @endforeach
-                        @endif
-                        @endforeach
-                    </td>
-                    <td>
-                        <form action="{{ route('jokes.destroy',$joke->id) }}" method="Post">
-                            @method('EDIT')
-                            <a class="btn btn-primary" href="{{ route('jokes.edit',$joke->id) }}">Edit</a>
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>{{ $joke->joketext }}</td>
+                        <td>{{ $joke->jokedate }}</td>
+                        <td>
+                            @foreach ($authors as $author)
+                                @if ($author->id == $joke->authorid)
+                                    {{ $author->name }}
+                                @endif
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($jokeCategories as $jokeCat)
+                                @if ($jokeCat->jokeid == $joke->id)
+                                    @foreach ($categories as $category)
+                                        @if ($category->id == $jokeCat->categoryid)
+                                            {{ $category->name }}
+                                        @endif
+                                    @endforeach
+                                @endif
+                            @endforeach
+                        </td>
+                        <td>
+                            <form action="{{ route('jokes.destroy', $joke->id) }}" method="Post">
+                                @method('EDIT')
+                                <a class="btn btn-primary" href="{{ route('jokes.edit', $joke->id) }}">Edit</a>
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                                @method('GET')
+                                <a class="btn btn-success" href="{{ route('jokes.show', $joke) }}">Show Categories</a>
+                            </form>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
