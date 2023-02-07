@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AuthorController extends Controller
 {
@@ -15,7 +16,16 @@ class AuthorController extends Controller
         $authors = Author::orderBy('id', 'desc')->paginate();
         return view('authors.index', compact('authors'));
     }
-
+    public function show(Author $author)
+    {
+        $isAuthor = true;
+        $authors =  DB::table('authors')->get();
+        $jokes =  DB::table('jokes')
+            ->join('authors', 'authors.id', '=', 'jokes.authorid')
+            ->where('jokes.authorid', intval($author->id))
+            ->get();
+        return view('jokes.filter', compact('author'))->with("jokes", $jokes)->with("isAuthor", $isAuthor)->with("authors", $authors);
+    }
     /* mostrar formulari per crear nou author */
     public function create()
     {
