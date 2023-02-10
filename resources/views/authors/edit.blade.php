@@ -21,30 +21,32 @@
                 </div>
             </div>
         </div>
-        @if(session('status'))
-        <div class="alert alert-success mb-1 mt-1">
-            {{ session('status') }}
-        </div>
+        @if (session('status'))
+            <div class="alert alert-success mb-1 mt-1">
+                {{ session('status') }}
+            </div>
         @endif
-        <form action="{{ route('authors.update',$author->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('authors.update', $author->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong>Author Name:</strong>
-                        <input type="text" name="name" value="{{ $author->name }}" class="form-control" placeholder="Author name">
+                        <input type="text" name="name" value="{{ $author->name }}" class="form-control"
+                            placeholder="Author name">
                         @error('name')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong>Author Email:</strong>
-                        <input type="email" name="email" class="form-control" placeholder="Author Email" value="{{ $author->email }}">
+                        <input type="email" name="email" class="form-control" placeholder="Author Email"
+                            value="{{ $author->email }}">
                         @error('email')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
@@ -53,10 +55,45 @@
                         <strong>Author Password:</strong>
                         <input type="password" name="password" value="{{ $author->password }}" class="form-control">
                         @error('password')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <strong>Roles:</strong><br>
+                        @foreach ($roles as $role)
+                            <label for="role">{{ $role->description }}
+                                @isset($authoroles)
+                                    @php
+                                        $aux = true;
+                                    @endphp
+                                    @foreach ($authorroles as $authorrole)
+                                        @if ($role->id == $authorole->roleid)
+                                            <input type="checkbox" name="roleid[]" value="{{ $role->id }}" checked>
+                                            @php
+                                                $aux = false;
+                                            @endphp
+                                        @break
+                                    @endif
+                                @endforeach
+
+                                @if ($aux)
+                                    <input type="checkbox" name="roleid[]" value="{{ $role->id }}">
+                                @endif
+                            @else
+                                <input type="checkbox" name="roleid[]" value="{{ $role->id }}">
+                        @endif
+
+                        </label>
+                        <br>
+                        @endforeach
+                        @error('roleid')
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-primary ml-3">Submit</button>
             </div>
         </form>

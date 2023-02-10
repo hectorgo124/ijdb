@@ -32,8 +32,8 @@
                     <th>Joke Text</th>
                     <th>Joke Date</th>
                     <th>Author</th>
-                    <th>Category</th>
-                    <th width="280px">Action</th>
+                    <th width="200px">Category</th>
+                    <th width="200px">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -44,18 +44,25 @@
                         <td>
                             @foreach ($authors as $author)
                                 @if ($author->id == $joke->authorid)
-                                    {{ $author->name }}
+                                    @method('GET')
+                                    <a class="text-white"
+                                        href="{{ route('authors.show', $author->id) }}">{{ $author->name }}</a>
                                 @endif
                             @endforeach
                         </td>
                         <td>
                             @foreach ($jokeCategories as $jokeCat)
                                 @if ($jokeCat->jokeid == $joke->id)
-                                    @foreach ($categories as $category)
-                                        @if ($category->id == $jokeCat->categoryid)
-                                            {{ $category->name }}
-                                        @endif
-                                    @endforeach
+                                    <ul>
+                                        @foreach ($categories as $category)
+                                            @if ($category->id == $jokeCat->categoryid)
+                                                @method('GET')
+                                                <li> <a class="text-white"
+                                                        href="{{ route('categories.show', $category->id) }}">{{ $category->name }}</a>
+                                                </li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
                                 @endif
                             @endforeach
                         </td>
@@ -66,8 +73,7 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Delete</button>
-                                @method('GET')
-                                <a class="btn btn-success" href="{{ route('jokes.show', $joke) }}">Show Categories</a>
+
                             </form>
                         </td>
                     </tr>

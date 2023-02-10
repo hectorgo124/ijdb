@@ -11,7 +11,7 @@
 </head>
 
 
-@include('navbar')
+<?php echo $__env->make('navbar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 <body class="bg-secondary">
     <div class="m-0 mt-5 row justify-content-center align-items-center">
@@ -26,7 +26,7 @@
     <div class="m-0 mt-5 row justify-content-center align-items-center ">
         <div class="col-6 bg-dark p-5 text-center text-light border border-light rounded shadow-lg">
             <p>RANDOM JOKE: </p>
-            @php
+            <?php
                 use App\Http\Controllers\JokeController;
                 use App\Http\Controllers\AuthorController;
                 use Illuminate\Support\Facades\DB;
@@ -47,10 +47,10 @@
                         break;
                     }
                 }
-            @endphp
+            ?>
             <br>
-            @method('GET')
-            <a class="text-white" href="{{ route('authors.show', $author->id) }}">Author: {{ $author->name }}</a>
+            <?php echo method_field('GET'); ?>
+            <a class="text-white" href="<?php echo e(route('authors.show', $author->id)); ?>">Author: <?php echo e($author->name); ?></a>
 
 
 
@@ -60,7 +60,7 @@
     <div class="m-0 mt-5 row justify-content-center align-items-center">
         <div class="col-6 bg-dark p-5 text-center text-light border border-light rounded shadow-lg">
             <p>LAST JOKE: </p>
-            @php
+            <?php
                 
                 $joke = DB::table('jokes')
                     ->latest('created_at')
@@ -77,12 +77,13 @@
                         break;
                     }
                 }
-            @endphp
+            ?>
             <br>
-            @method('GET')
-            <a class="text-white" href="{{ route('authors.show', $author->id) }}">Author: {{ $author->name }}</a>
+            <?php echo method_field('GET'); ?>
+            <a class="text-white" href="<?php echo e(route('authors.show', $author->id)); ?>">Author: <?php echo e($author->name); ?></a>
         </div>
     </div>
 </body>
 
 </html>
+<?php /**PATH /home/hector/Documentos/docker-project/ijdb/resources/views/home.blade.php ENDPATH**/ ?>

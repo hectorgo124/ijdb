@@ -20,10 +20,10 @@
                 </div>
             </div>
         </div>
-        @if(session('status'))
-        <div class="alert alert-success mb-1 mt-1">
-            {{ session('status') }}
-        </div>
+        @if (session('status'))
+            <div class="alert alert-success mb-1 mt-1">
+                {{ session('status') }}
+            </div>
         @endif
         <form action="{{ route('authors.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -33,7 +33,7 @@
                         <strong>Author name:</strong>
                         <input type="text" name="name" class="form-control" placeholder="Author Name">
                         @error('name')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                         <strong>Author Email:</strong>
                         <input type="email" name="email" class="form-control" placeholder="Author Email">
                         @error('email')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
@@ -51,7 +51,21 @@
                         <strong>Author Password:</strong>
                         <input type="password" name="password" class="form-control" placeholder="password">
                         @error('password')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <strong>Roles:</strong> <br>
+                        @foreach ($roles as $role)
+                            <label for="role">{{ $role->description }}
+                                <input type="checkbox" name="roleid[]" value="{{ $role->id }}">
+                            </label>
+                            <br>
+                        @endforeach
+                        @error('roleid')
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>

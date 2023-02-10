@@ -21,6 +21,7 @@ Route::get('/', function () {
 });
 
 Route::resource('authors', AuthorController::class);
+Route::resource('authors/:id', AuthorController::class);
 
 Route::resource('jokes', JokeController::class);
 Route::resource('jokes/:id', JokeController::class);

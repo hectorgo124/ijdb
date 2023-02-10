@@ -31,6 +31,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Roles</th>
                     <th width="280px">Action</th>
                 </tr>
             </thead>
@@ -40,6 +41,18 @@
                         <td>{{ $author->id }}</td>
                         <td>{{ $author->name }}</td>
                         <td>{{ $author->email }}</td>
+                        <td>
+                            @foreach ($authorroles as $auRol)
+                                @if ($auRol->authorid == $author->id)
+                                    @foreach ($roles as $role)
+                                        @if ($role->id == $auRol->roleid)
+                                            > {{ $role->description }} <br>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            @endforeach
+
+                        </td>
                         <td>
                             <form action="{{ route('authors.destroy', $author->id) }}" method="Post">
                                 @method('EDIT')

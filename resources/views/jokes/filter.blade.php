@@ -36,7 +36,7 @@
                     <th>Joke Text</th>
                     <th>Joke Date</th>
                     <th>Author</th>
-                    <th width="280px">Action</th>
+                    <th width="350px">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,7 +47,9 @@
                         <td>
                             @foreach ($authors as $author)
                                 @if ($author->id == $joke->authorid)
-                                    {{ $author->name }}
+                                    @method('GET')
+                                    <a class="text-white"
+                                        href="{{ route('authors.show', $author->id) }}">{{ $author->name }}</a>
                                 @endif
                             @endforeach
                         </td>
@@ -59,7 +61,11 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Delete</button>
-
+                                @if (!$isAuthor)
+                                    @method('GET')
+                                    <a class="btn btn-success" href="{{ route('jokes.show', $joke->id) }}">Show
+                                        Categories</a>
+                                @endif
                             </form>
                         </td>
                     </tr>
