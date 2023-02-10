@@ -45,6 +45,8 @@ class CategoryController extends Controller
         return view('categories.edit', compact('category'));
     }
 
+
+
     public function show(Category $category)
     {
         $isAuthor = false;
@@ -55,6 +57,8 @@ class CategoryController extends Controller
             ->get();
         return view('jokes.filter', compact('category'))->with("jokes", $jokes)->with("authors", $authors)->with("isAuthor", $isAuthor);
     }
+
+
     // enviar la categoria edita
 
     public function update(Request $request, Category $category)

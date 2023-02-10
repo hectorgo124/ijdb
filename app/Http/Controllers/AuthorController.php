@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Author;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Author;
+use App\Models\AuthorRoles;
+use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
@@ -12,9 +13,10 @@ class AuthorController extends Controller
     /* mostrar authors */
     public function index()
     {
-
+        $roles = DB::table('roles')->get();
+        $authorroles = DB::table('author_roles')->get();
         $authors = Author::orderBy('id', 'desc')->paginate();
-        return view('authors.index', compact('authors'));
+        return view('authors.index', compact('authors', 'authorroles', 'roles'));
     }
     public function show(Author $author)
     {
@@ -29,7 +31,9 @@ class AuthorController extends Controller
     /* mostrar formulari per crear nou author */
     public function create()
     {
-        return view('authors.create');
+        $roles = DB::table('roles')->get();
+        $authorroles = DB::table('author_roles')->get();
+        return view('authors.create', compact('roles', 'authorroles'));
     }
 
     /* afegir un nou author a la bbdd */
@@ -44,6 +48,17 @@ class AuthorController extends Controller
 
         Author::create($request->post());
 
+        $author = DB::table('authors')->latest('created_at')->first();
+
+        foreach ($request->roleid as $rol => $id) {
+            $data[]  = [
+                'authorid' => $author->id,
+                'roleid' => $id
+            ];
+        }
+
+        AuthorRoles::insert($data);
+
         return redirect()->route('authors.index')->with('success', 'Author has been added!');
     }
 
@@ -52,7 +67,9 @@ class AuthorController extends Controller
     public function edit(Author $author)
     {
 
-        return view('authors.edit', compact('author'));
+        $roles = DB::table('roles')->get();
+        $authorroles = DB::table('author_roles')->where('authorid', $author->id)->get();
+        return view('authors.edit', compact('author', 'roles', 'authorroles'));
     }
 
     /* enviar el editat a la bbdd */
@@ -67,6 +84,19 @@ class AuthorController extends Controller
         ]);
 
         $author->fill($request->post())->save();
+
+        DB::table('author_roles')->where('authorid', $author->id)->delete();
+        /* se añadixen les noves*/
+        $data = [];
+
+        foreach ($request->roleid as $rol => $id) {
+            $data[]  = [
+                'authorid' => $author->id,
+                'roleid' => $id
+            ];
+        }
+
+        AuthorRoles::insert($data);
 
         return redirect()->route('authors.index')->with('success', 'Author has been updated!');
     }

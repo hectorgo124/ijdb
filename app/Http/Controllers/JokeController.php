@@ -60,22 +60,22 @@ class JokeController extends Controller
 
         $joke = DB::table('jokes')->latest('created_at')->first();
 
-        JokeCategories::create(
-            [
+
+        foreach ($request->categoryid as $cat => $id) {
+            $data[]  = [
                 'jokeid' => $joke->id,
-                'categoryid' => $request->categoryid,
-            ]
-        );
+                'categoryid' => $id
+            ];
+        }
+
+        JokeCategories::insert($data);
+
 
         return redirect()->route('jokes.index')->with('success', 'Joke has been created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\joke  $joke
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function show(Joke $joke)
     {
         $categories =  DB::table('categories')
@@ -94,7 +94,6 @@ class JokeController extends Controller
     public function edit(Joke $joke)
     {
         $authors =  DB::table('authors')->get();
-        $jokeCategories = DB::table('joke_categories')->get();
         $categories = DB::table('categories')->get();
         $jokeCategories = DB::table('joke_categories')->where('jokeid', $joke->id)->get();
         return view('jokes.edit', compact('joke', 'authors', 'jokeCategories', 'categories', 'jokeCategories'));
